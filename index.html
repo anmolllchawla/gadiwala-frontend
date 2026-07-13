@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gadiwala.ca — Best car deals from Rishabh, Vancouver</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,560;9..144,650;9..144,780&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#12190F;
+  --ink-2:#3C4A40;
+  --paper:#F1EEE4;
+  --card:#FFFFFF;
+  --green:#2F7A4F;
+  --green-bright:#3FCB57;
+  --green-glow:#3AA845;
+  --slate:#5D7A85;
+  --rule:#DBD5C4;
+  --muted:#7C8577;
+  --rain:#8FA6AC;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:'IBM Plex Sans',system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+::selection{background:var(--green-bright);color:#0d130a}
+
+/* grain overlay */
+.grain{position:fixed;inset:0;z-index:200;pointer-events:none;opacity:.045;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* reveal-on-scroll */
+.rv{opacity:0;transform:translateY(28px);transition:opacity .7s cubic-bezier(.2,.7,.3,1),transform .7s cubic-bezier(.2,.7,.3,1)}
+.rv.in{opacity:1;transform:translateY(0)}
+.rv2{transition-delay:.1s}.rv3{transition-delay:.2s}.rv4{transition-delay:.3s}
+
+header{position:sticky;top:0;z-index:100;background:rgba(241,238,228,.78);backdrop-filter:blur(14px) saturate(1.4);border-bottom:1px solid var(--rule);transition:background .3s}
+.nav{display:flex;align-items:center;justify-content:space-between;height:76px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ink)}
+.brand svg{width:36px;height:36px;flex-shrink:0}
+.brand b{font-family:'Fraunces',serif;font-size:1.36rem;font-weight:650;letter-spacing:-.01em}
+.brand span{display:block;font-family:'IBM Plex Mono',monospace;font-size:.58rem;color:var(--muted);letter-spacing:.08em;margin-top:2px}
+.links{display:flex;align-items:center;gap:32px}
+.links a{text-decoration:none;color:var(--ink-2);font-size:.86rem;font-weight:500;position:relative;padding:4px 0}
+.links a::after{content:'';position:absolute;left:0;bottom:0;height:1.5px;width:0;background:var(--green-glow);transition:width .25s cubic-bezier(.2,.8,.3,1)}
+.links a:hover::after{width:100%}
+.call{position:relative;overflow:hidden;background:var(--ink);color:#fff;padding:11px 20px;border-radius:5px;font-family:'IBM Plex Mono',monospace;font-size:.79rem;text-decoration:none;white-space:nowrap;isolation:isolate}
+.call::before{content:'';position:absolute;inset:0;background:var(--green-glow);transform:translateX(-102%);transition:transform .3s cubic-bezier(.2,.8,.3,1);z-index:-1}
+.call:hover::before{transform:translateX(0)}
+.call::after{display:none}
+.burger{display:none;background:none;border:1px solid var(--rule);border-radius:6px;padding:9px 11px;cursor:pointer}
+.burger div{width:19px;height:2px;background:var(--ink);margin:4px 0}
+
+/* ---------- HERO — dark, atmospheric ---------- */
+.hero{
+  position:relative;background:radial-gradient(ellipse 120% 90% at 50% -10%,#1a2415 0%,var(--ink) 55%,#0c110a 100%);
+  color:#EDEAE0;overflow:hidden;padding:96px 0 0;
+}
+.aurora{position:absolute;inset:0;z-index:0;pointer-events:none;filter:blur(60px);opacity:.55}
+.aurora span{position:absolute;border-radius:50%;mix-blend-mode:screen}
+.a1{width:520px;height:520px;background:radial-gradient(circle,#3FCB57,transparent 68%);top:-180px;left:-120px;animation:drift1 22s ease-in-out infinite}
+.a2{width:460px;height:460px;background:radial-gradient(circle,#5D7A85,transparent 70%);top:20px;right:-140px;animation:drift2 26s ease-in-out infinite}
+.a3{width:380px;height:380px;background:radial-gradient(circle,#2F7A4F,transparent 70%);bottom:-160px;left:35%;animation:drift3 19s ease-in-out infinite}
+@keyframes drift1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(60px,40px) scale(1.15)}}
+@keyframes drift2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-50px,30px) scale(1.1)}}
+@keyframes drift3{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(30px,-40px) scale(1.2)}}
+
+.glow-cursor{position:absolute;width:420px;height:420px;border-radius:50%;pointer-events:none;z-index:1;
+  background:radial-gradient(circle,rgba(63,203,87,.16),transparent 70%);transform:translate(-50%,-50%);
+  transition:opacity .3s;opacity:0;
+}
+.hero:hover .glow-cursor{opacity:1}
+
+.hero-inner{position:relative;z-index:2}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:center;padding-bottom:64px}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:.7rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--green-bright);display:flex;align-items:center;gap:9px;margin-bottom:24px}
+.eyebrow::before{content:'';width:26px;height:1.5px;background:var(--green-bright);box-shadow:0 0 8px var(--green-bright)}
+h1{font-family:'Fraunces',serif;font-weight:560;font-size:clamp(2.5rem,5vw,3.9rem);line-height:1.05;letter-spacing:-.015em;color:#fff}
+h1 em{font-style:italic;font-weight:650;background:linear-gradient(100deg,var(--green-bright),#8ee39a 60%,var(--green-bright));background-size:200% auto;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 5s linear infinite}
+@keyframes shine{to{background-position:200% center}}
+.lede{margin-top:24px;font-size:1.06rem;line-height:1.68;color:#B9C0AE;max-width:42ch}
+.hero-cta{display:flex;gap:14px;margin-top:34px;flex-wrap:wrap}
+.btn{position:relative;overflow:hidden;padding:14px 26px;border-radius:6px;font-weight:600;font-size:.92rem;text-decoration:none;display:inline-block;transition:transform .25s cubic-bezier(.2,.8,.3,1),box-shadow .25s;border:1.5px solid transparent;font-family:'IBM Plex Sans',sans-serif;isolation:isolate}
+.btn-p{background:var(--green-bright);color:#0d130a}
+.btn-p:hover{transform:translateY(-3px);box-shadow:0 14px 30px -10px rgba(63,203,87,.55)}
+.btn-s{border-color:rgba(237,234,224,.35);color:#EDEAE0}
+.btn-s:hover{background:rgba(237,234,224,.08);transform:translateY(-3px);border-color:#EDEAE0}
+.btn span.sheen{position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(120deg,transparent,rgba(255,255,255,.5),transparent);transform:skewX(-20deg);transition:left .6s ease}
+.btn:hover span.sheen{left:120%}
+
+/* receipt — floats gently, glass edge */
+.receipt{background:#fff;color:var(--ink);border-radius:4px;padding:32px 28px 0;box-shadow:0 40px 70px -24px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.06);position:relative;font-family:'IBM Plex Mono',monospace;transform:rotate(-1.4deg);animation:float 6s ease-in-out infinite}
+@keyframes float{0%,100%{transform:rotate(-1.4deg) translateY(0)}50%{transform:rotate(-1.4deg) translateY(-10px)}}
+.receipt::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(transparent,transparent 27px,rgba(30,42,34,.025) 27px,rgba(30,42,34,.025) 28px);pointer-events:none}
+.receipt::after{content:'';position:absolute;left:0;right:0;bottom:-10px;height:11px;background:radial-gradient(circle at 6px -2px, transparent 7px, #fff 7.5px) repeat-x;background-size:14px 14px}
+.r-head{text-align:center;padding-bottom:17px;border-bottom:2px dashed var(--rule)}
+.r-head b{font-family:'Fraunces',serif;font-weight:650;font-size:1.15rem;letter-spacing:-.01em}
+.r-head span{display:block;font-size:.64rem;color:var(--muted);margin-top:6px;letter-spacing:.05em}
+.r-row{display:flex;justify-content:space-between;padding:11px 0;font-size:.81rem;border-bottom:1px dotted var(--rule)}
+.r-row span:first-child{color:var(--muted)}
+.r-row span:last-child{font-weight:600}
+.r-row.save span:last-child{color:var(--green)}
+.r-total{display:flex;justify-content:space-between;align-items:baseline;padding:18px 0;border-top:2px dashed var(--rule);margin-top:4px}
+.r-total span{font-size:.7rem;letter-spacing:.11em;text-transform:uppercase;color:var(--muted)}
+.r-total b{font-family:'Fraunces',serif;font-size:1.9rem;font-weight:650;letter-spacing:-.02em}
+.r-foot{text-align:center;font-size:.63rem;color:var(--muted);padding:14px 0 28px;letter-spacing:.04em;line-height:1.7}
+.r-foot em{font-style:normal;color:var(--green);font-weight:600}
+.r-stamp{position:absolute;top:26px;right:-10px;width:70px;height:70px;transform:rotate(8deg);animation:stampPulse 3s ease-in-out infinite}
+@keyframes stampPulse{0%,100%{opacity:1}50%{opacity:.55}}
+
+/* marquee ticker */
+.ticker-wrap{background:var(--ink);border-top:1px solid rgba(255,255,255,.08);overflow:hidden;position:relative;z-index:2}
+.ticker{display:flex;white-space:nowrap;animation:scroll 26s linear infinite}
+.ticker:hover{animation-play-state:paused}
+.ticker span{font-family:'IBM Plex Mono',monospace;font-size:.76rem;color:#8FA080;padding:14px 34px;display:flex;align-items:center;gap:10px;letter-spacing:.04em}
+.ticker span::before{content:'●';color:var(--green-bright);font-size:.55rem}
+@keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* skyline parallax */
+.skyline-wrap{position:relative;border-bottom:1px solid var(--rule);background:linear-gradient(180deg,#E8E4D5,var(--paper));overflow:hidden}
+.skyline{width:100%;height:auto;display:block;will-change:transform}
+
+/* ---------- trust bar ---------- */
+.trust{border-bottom:1px solid var(--rule);background:#fff}
+.trust-in{display:flex;justify-content:space-between;flex-wrap:wrap;gap:22px;padding:24px 0}
+.t-item{display:flex;align-items:center;gap:11px;transition:transform .25s}
+.t-item:hover{transform:translateY(-2px)}
+.t-item svg{width:18px;height:18px;stroke:var(--green);flex-shrink:0}
+.t-item p{font-size:.84rem;font-weight:500;color:var(--ink-2)}
+
+section{padding:80px 0}
+.sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:36px}
+h2{font-family:'Fraunces',serif;font-weight:560;font-size:2.3rem;letter-spacing:-.015em}
+.sec-head p{color:var(--muted);font-size:.92rem;margin-top:8px}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:32px}
+.chip{padding:8px 16px;border:1px solid var(--rule);border-radius:100px;background:#fff;font-family:'IBM Plex Mono',monospace;font-size:.75rem;color:var(--ink-2);cursor:pointer;transition:all .18s}
+.chip:hover{border-color:var(--ink);transform:translateY(-2px)}
+.chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+/* ---------- inventory cards w/ tilt ---------- */
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.car{background:var(--card);border:1px solid var(--rule);border-radius:8px;overflow:hidden;cursor:pointer;
+  transition:transform .12s ease-out,box-shadow .3s ease;transform-style:preserve-3d;will-change:transform}
+.car:hover{box-shadow:0 26px 50px -20px rgba(18,25,15,.4)}
+.car-img{height:168px;position:relative;display:flex;align-items:center;justify-content:center;background:linear-gradient(155deg,#EAE7DA,#DAD4C1);overflow:hidden}
+.car-img svg{width:112px;opacity:.5;transition:transform .4s ease}
+.car:hover .car-img svg{transform:scale(1.08) translateY(-3px)}
+.car-img::after{content:'';position:absolute;inset:0;background:linear-gradient(115deg,transparent 40%,rgba(255,255,255,.35) 48%,transparent 56%);transform:translateX(-140%);transition:transform .7s ease}
+.car:hover .car-img::after{transform:translateX(60%)}
+.stamp-tag{position:absolute;top:12px;left:12px;border:1.5px solid var(--green);color:var(--green);font-family:'IBM Plex Mono',monospace;font-size:.6rem;font-weight:600;padding:4px 9px;border-radius:3px;letter-spacing:.06em;text-transform:uppercase;transform:rotate(-3deg);background:rgba(255,255,255,.88)}
+.stamp-tag.ink{border-color:var(--ink-2);color:var(--ink-2)}
+.car-body{padding:20px}
+.car-body h3{font-family:'Fraunces',serif;font-size:1.08rem;font-weight:650;letter-spacing:-.01em}
+.spec{display:flex;gap:13px;margin-top:10px;flex-wrap:wrap;font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--muted)}
+.price-row{display:flex;justify-content:space-between;align-items:flex-end;margin-top:17px;padding-top:16px;border-top:1px solid var(--rule)}
+.price b{font-family:'Fraunces',serif;font-size:1.35rem;font-weight:650;letter-spacing:-.01em;display:block}
+.price small{font-family:'IBM Plex Mono',monospace;font-size:.66rem;color:var(--muted);display:block;margin-top:3px}
+.view{font-family:'IBM Plex Mono',monospace;font-size:.72rem;font-weight:600;color:var(--green);display:flex;align-items:center;gap:5px}
+.car:hover .view{gap:9px}
+.view span{transition:all .2s}
+
+/* ---------- how ---------- */
+.how{background:var(--ink);color:#fff;position:relative;overflow:hidden}
+.how::before{content:'';position:absolute;top:-200px;right:-200px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(63,203,87,.12),transparent 70%);pointer-events:none}
+.how h2{color:#fff}
+.how .sec-head p{color:#9FAA9F}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.13);border-radius:8px;overflow:hidden;position:relative;z-index:1}
+.step{background:var(--ink);padding:36px 30px;transition:background .3s}
+.step:hover{background:#1c2617}
+.step-n{font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--green-bright);letter-spacing:.14em;margin-bottom:18px}
+.step h4{font-family:'Fraunces',serif;font-size:1.42rem;font-weight:650;margin-bottom:10px}
+.step p{color:#9FAA9F;font-size:.9rem;line-height:1.64}
+
+/* ---------- stat band w/ counters ---------- */
+.stat-band{background:var(--paper);border-bottom:1px solid var(--rule);padding:56px 0}
+.stat-grid{display:grid;grid-template-columns:repeat(3,1fr);text-align:center;gap:24px}
+.stat b{font-family:'Fraunces',serif;font-size:3rem;font-weight:650;color:var(--green);letter-spacing:-.02em;display:block}
+.stat span{font-family:'IBM Plex Mono',monospace;font-size:.75rem;color:var(--muted);letter-spacing:.03em}
+
+/* ---------- rishabh ---------- */
+.about-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:58px;align-items:center}
+.portrait{aspect-ratio:1;border-radius:8px;border:1px solid var(--rule);background:linear-gradient(155deg,#fff,#F3F0E5);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.portrait svg{width:58%;opacity:.92;transition:transform .4s ease}
+.portrait:hover svg{transform:scale(1.04) rotate(-1deg)}
+.sticker{position:absolute;bottom:16px;right:16px;background:var(--green-bright);color:#0d130a;font-family:'IBM Plex Mono',monospace;font-size:.64rem;font-weight:600;padding:8px 12px;border-radius:4px;line-height:1.5}
+.quote{font-family:'Fraunces',serif;font-style:italic;font-size:1.7rem;font-weight:560;line-height:1.36;letter-spacing:-.01em;margin:18px 0 20px}
+.about-grid p{color:var(--ink-2);line-height:1.72;font-size:.98rem}
+.sig{margin-top:26px;font-family:'IBM Plex Mono',monospace;font-size:.77rem;color:var(--muted);border-left:2px solid var(--green-bright);padding-left:14px;line-height:1.7}
+
+/* ---------- cta ---------- */
+.finale{position:relative;border-top:1px solid var(--rule);background:linear-gradient(180deg,#fff,#EFEBDC);text-align:center;overflow:hidden}
+.finale::before{content:'';position:absolute;top:-120px;left:50%;transform:translateX(-50%);width:600px;height:280px;background:radial-gradient(ellipse,rgba(63,168,69,.16),transparent 70%);pointer-events:none}
+.finale h2{position:relative;font-size:clamp(2rem,4vw,3rem);max-width:17ch;margin:0 auto}
+.finale p{position:relative;color:var(--muted);margin:16px auto 30px;max-width:46ch;line-height:1.65}
+
+/* ---------- footer ---------- */
+footer{background:var(--ink);color:#9FAA9F;padding:54px 0 30px;font-size:.85rem}
+.f-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:36px;padding-bottom:36px;border-bottom:1px solid rgba(255,255,255,.12)}
+.f-grid h5{color:#fff;font-family:'IBM Plex Mono',monospace;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:16px}
+.f-grid a{display:block;color:#9FAA9F;text-decoration:none;margin-bottom:10px;transition:color .18s,transform .18s}
+.f-grid a:hover{color:var(--green-bright);transform:translateX(3px)}
+.f-brand p{margin-top:14px;line-height:1.65;max-width:30ch}
+.f-bot{display:flex;justify-content:space-between;padding-top:24px;flex-wrap:wrap;gap:12px;font-size:.77rem}
+
+@media(max-width:900px){
+  .hero-grid,.about-grid{grid-template-columns:1fr;gap:44px}
+  .grid,.steps,.stat-grid{grid-template-columns:1fr}
+  .stat-grid{gap:36px}
+  .f-grid{grid-template-columns:1fr 1fr;gap:28px}
+  .links{display:none;position:absolute;top:76px;left:0;right:0;background:var(--paper);flex-direction:column;align-items:flex-start;padding:22px 24px;gap:18px;border-bottom:1px solid var(--rule)}
+  .links.open{display:flex}
+  .burger{display:block}
+  .receipt{transform:none;animation:none}
+  section{padding:58px 0}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<div class="grain"></div>
+
+<header>
+  <div class="wrap nav">
+    <a href="#" class="brand">
+      <svg viewBox="0 0 100 100" fill="none">
+        <path d="M28 30h44l8 16H20l8-16z" fill="#12190F"/>
+        <rect x="16" y="46" width="68" height="26" rx="6" fill="#12190F"/>
+        <rect x="20" y="70" width="14" height="8" rx="2" fill="#12190F"/>
+        <rect x="66" y="70" width="14" height="8" rx="2" fill="#12190F"/>
+        <path d="M14 44h30a4 4 0 014 4v6a10 10 0 01-10 10H24a10 10 0 01-10-10v-10z" fill="#3AA845"/>
+        <path d="M86 44H56a4 4 0 00-4 4v6a10 10 0 0010 10h14a10 10 0 0010-10v-10z" fill="#3AA845"/>
+        <circle cx="31" cy="53" r="7" fill="#fff"/><circle cx="69" cy="53" r="7" fill="#fff"/>
+        <circle cx="31" cy="53" r="4" fill="#12190F"/><circle cx="69" cy="53" r="4" fill="#12190F"/>
+      </svg>
+      <span><b>Gadiwala.ca</b><span>BEST CAR DEALS FROM RISHABH</span></span>
+    </a>
+    <nav class="links" id="menu">
+      <a href="#inventory">Inventory</a>
+      <a href="#how">How it works</a>
+      <a href="#rishabh">Meet Rishabh</a>
+      <a href="#finance">Financing</a>
+      <a href="tel:+16045550142" class="call">(604) 555-0142</a>
+    </nav>
+    <button class="burger" id="burger" aria-label="Open menu"><div></div><div></div></button>
+  </div>
+</header>
+
+<div class="hero" id="heroSection">
+  <div class="aurora"><span class="a1"></span><span class="a2"></span><span class="a3"></span></div>
+  <div class="glow-cursor" id="glowCursor"></div>
+
+  <div class="hero-inner">
+    <div class="wrap hero-grid">
+      <div class="rv in">
+        <div class="eyebrow">East Vancouver, BC</div>
+        <h1>Every car here comes with <em>the real number</em>.</h1>
+        <p class="lede">No doc-fee surprises at the desk. No "let me ask my manager." Rishabh prices each car once, prints the breakdown, and lets you read it before you sit down.</p>
+        <div class="hero-cta">
+          <a href="#inventory" class="btn btn-p">Browse 38 cars in stock<span class="sheen"></span></a>
+          <a href="#rishabh" class="btn btn-s">Why buy from Rishabh<span class="sheen"></span></a>
+        </div>
+      </div>
+
+      <div class="receipt rv rv2 in">
+        <svg class="r-stamp" viewBox="0 0 100 100" fill="none">
+          <circle cx="50" cy="50" r="46" stroke="#2F7A4F" stroke-width="2" stroke-dasharray="4 3"/>
+          <text x="50" y="46" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" fill="#2F7A4F" font-weight="600">FIXED</text>
+          <text x="50" y="60" text-anchor="middle" font-family="IBM Plex Mono" font-size="10" fill="#2F7A4F" font-weight="600">PRICE</text>
+        </svg>
+        <div class="r-head">
+          <b>2021 Honda Civic EX</b>
+          <span>STOCK #GW-4471 · 58,200 KM</span>
+        </div>
+        <div class="r-row"><span>Vehicle price</span><span>$23,995.00</span></div>
+        <div class="r-row"><span>Out-of-province inspection</span><span>Included</span></div>
+        <div class="r-row"><span>Carfax report</span><span>Included</span></div>
+        <div class="r-row"><span>Admin / doc fee</span><span>$0.00</span></div>
+        <div class="r-row"><span>GST 5%</span><span>$1,199.75</span></div>
+        <div class="r-row"><span>PST 7%</span><span>$1,679.65</span></div>
+        <div class="r-row save"><span>Gadiwala discount</span><span>−$800.00</span></div>
+        <div class="r-total">
+          <span>Drive away</span>
+          <b>$26,074.40</b>
+        </div>
+        <p class="r-foot">This is the number you pay.<br>Nothing gets added at the desk. <em>Ever.</em></p>
+      </div>
+    </div>
+
+    <div class="ticker-wrap">
+      <div class="ticker">
+        <span>ZERO ADMIN FEES</span><span>VSA LICENSED #31245</span><span>FREE CARFAX ON EVERY CAR</span><span>7-DAY RETURN WINDOW</span><span>FINANCING FROM 4.9% APR</span><span>1,400+ CARS SOLD SINCE 2015</span>
+        <span>ZERO ADMIN FEES</span><span>VSA LICENSED #31245</span><span>FREE CARFAX ON EVERY CAR</span><span>7-DAY RETURN WINDOW</span><span>FINANCING FROM 4.9% APR</span><span>1,400+ CARS SOLD SINCE 2015</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="skyline-wrap">
+  <svg class="skyline" id="skylineFar" viewBox="0 0 1180 130" preserveAspectRatio="none" style="position:relative">
+    <polygon points="0,130 0,78 60,40 130,90 210,30 290,85 360,50 430,95 500,42 560,80 640,25 710,88 780,55 850,95 920,48 1000,84 1060,38 1130,90 1180,60 1180,130" fill="#DAD4C1"/>
+    <polygon points="0,130 0,100 90,72 170,105 250,68 330,100 420,75 500,102 590,66 670,100 760,78 840,105 930,70 1010,98 1090,80 1180,100 1180,130" fill="#C7C0A9"/>
+    <rect x="0" y="118" width="1180" height="12" fill="#8FA6AC" opacity=".55"/>
+    <g fill="#12190F">
+      <rect x="560" y="112" width="36" height="10" rx="2"/>
+      <rect x="566" y="106" width="6" height="7"/>
+      <rect x="584" y="106" width="6" height="7"/>
+      <circle cx="570" cy="123" r="3.5" fill="#F1EEE4"/><circle cx="586" cy="123" r="3.5" fill="#F1EEE4"/>
+    </g>
+  </svg>
+</div>
+
+<div class="trust">
+  <div class="wrap trust-in">
+    <div class="t-item">
+      <svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6l7-3z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <p>VSA licensed dealer</p>
+    </div>
+    <div class="t-item">
+      <svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zM14 2v6h6M9 15h6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <p>Free Carfax on every car</p>
+    </div>
+    <div class="t-item">
+      <svg fill="none" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2" stroke-linecap="round"/></svg>
+      <p>7-day return window</p>
+    </div>
+    <div class="t-item">
+      <svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path d="M3 10h18M7 15h3" stroke-linecap="round"/><rect x="3" y="5" width="18" height="14" rx="2"/></svg>
+      <p>Financing from 4.9% APR</p>
+    </div>
+  </div>
+</div>
+
+<section id="inventory">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div>
+        <h2>What's on the lot</h2>
+        <p>Updated this morning, off Kingsway. If it's listed, it's here.</p>
+      </div>
+    </div>
+    <div class="filters rv">
+      <button class="chip on">All 38</button>
+      <button class="chip">Under $20K</button>
+      <button class="chip">SUV</button>
+      <button class="chip">Sedan</button>
+      <button class="chip">Truck</button>
+      <button class="chip">Hybrid &amp; EV</button>
+      <button class="chip">Low km</button>
+    </div>
+    <div class="grid" id="cars"></div>
+  </div>
+</section>
+
+<section class="stat-band">
+  <div class="wrap stat-grid">
+    <div class="stat rv"><b data-count="1400" data-suffix="+">0</b><span>CARS SOLD SINCE 2015</span></div>
+    <div class="stat rv rv2"><b data-count="0" data-prefix="$">0</b><span>ADMIN FEES, ALWAYS</span></div>
+    <div class="stat rv rv3"><b data-count="4.8" data-suffix="★" data-decimal="1">0</b><span>FROM 610 GOOGLE REVIEWS</span></div>
+  </div>
+</section>
+
+<section class="how" id="how">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div>
+        <h2>Three steps. That's the whole thing.</h2>
+        <p>Most people are in and out in under an hour.</p>
+      </div>
+    </div>
+    <div class="steps">
+      <div class="step rv">
+        <div class="step-n">STEP 01</div>
+        <h4>Pick the car</h4>
+        <p>Book a test drive online or just walk in. Every car on the lot has its full price sheet taped to the window — read it before you talk to anyone.</p>
+      </div>
+      <div class="step rv rv2">
+        <div class="step-n">STEP 02</div>
+        <h4>Sort the money</h4>
+        <p>Bring your own financing or use ours. Rishabh works with nine BC lenders, so a thin credit file isn't the end of the conversation.</p>
+      </div>
+      <div class="step rv rv3">
+        <div class="step-n">STEP 03</div>
+        <h4>Drive it home</h4>
+        <p>Inspection, plates, and Carfax are already done. Sign, take the keys, and if something feels wrong in the first week, bring it back.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="rishabh">
+  <div class="wrap about-grid">
+    <div class="portrait rv">
+      <svg viewBox="0 0 100 100" fill="none">
+        <path d="M28 30h44l8 16H20l8-16z" fill="#12190F"/>
+        <rect x="16" y="46" width="68" height="26" rx="6" fill="#12190F"/>
+        <rect x="20" y="70" width="14" height="8" rx="2" fill="#12190F"/>
+        <rect x="66" y="70" width="14" height="8" rx="2" fill="#12190F"/>
+        <path d="M14 44h30a4 4 0 014 4v6a10 10 0 01-10 10H24a10 10 0 01-10-10v-10z" fill="#3AA845"/>
+        <path d="M86 44H56a4 4 0 00-4 4v6a10 10 0 0010 10h14a10 10 0 0010-10v-10z" fill="#3AA845"/>
+        <circle cx="31" cy="53" r="7" fill="#fff"/><circle cx="69" cy="53" r="7" fill="#fff"/>
+        <circle cx="31" cy="53" r="4" fill="#12190F"/><circle cx="69" cy="53" r="4" fill="#12190F"/>
+      </svg>
+      <div class="sticker">10 years<br>on this lot</div>
+    </div>
+    <div class="rv rv2">
+      <div class="eyebrow" style="color:var(--green)">Meet Rishabh</div>
+      <p class="quote">"I sold cars the normal way for six years. I hated every minute of the last hour."</p>
+      <p>That last hour is the part everyone remembers — the back office, the four-square worksheet, the fees that appear out of nowhere. So when Rishabh opened Gadiwala on Kingsway, he cut it. One price, printed, on the windshield. Whatever you can find the car for elsewhere, he'd rather you tell him now than find out later.</p>
+      <p style="margin-top:14px">He'll also tell you when a car isn't right for you. It costs him a sale. It's the reason most of his customers came from someone who already bought here — plenty from as far as Surrey and the North Shore.</p>
+      <div class="sig">
+        Rishabh Mehta · Owner, VSA #31245<br>
+        Speaks English, Hindi, Punjabi, Gujarati
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="finale" id="finance">
+  <div class="wrap rv">
+    <h2>Come see one in person.</h2>
+    <p>Open seven days, rain or shine. Test drives take twenty minutes and you'll never be handed off to a closer.</p>
+    <div class="hero-cta" style="justify-content:center">
+      <a href="#inventory" class="btn btn-p" style="background:var(--green-bright);color:#0d130a">Book a test drive<span class="sheen"></span></a>
+      <a href="tel:+16045550142" class="btn btn-s" style="border-color:var(--ink);color:var(--ink)">Call Rishabh directly<span class="sheen"></span></a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="f-grid">
+      <div class="f-brand">
+        <h5>Gadiwala.ca</h5>
+        <p>4820 Kingsway, Burnaby, BC V5H 2E5. Mon–Sat 9–8, Sun 11–5.</p>
+      </div>
+      <div>
+        <h5>Shop</h5>
+        <a href="#inventory">All inventory</a>
+        <a href="#inventory">Under $20,000</a>
+        <a href="#inventory">SUVs &amp; trucks</a>
+        <a href="#inventory">Just arrived</a>
+      </div>
+      <div>
+        <h5>Buying</h5>
+        <a href="#finance">Financing</a>
+        <a href="#finance">Trade-in value</a>
+        <a href="#how">7-day returns</a>
+        <a href="#how">Warranty</a>
+      </div>
+      <div>
+        <h5>Contact</h5>
+        <a href="tel:+16045550142">(604) 555-0142</a>
+        <a href="mailto:rishabh@gadiwala.ca">rishabh@gadiwala.ca</a>
+        <a href="#rishabh">Directions</a>
+      </div>
+    </div>
+    <div class="f-bot">
+      <span>© 2026 Gadiwala Motors Inc. VSA #31245 · Vancouver, BC.</span>
+      <span>Prices exclude GST/PST and licensing. No admin fees, ever.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+const CAR = `<svg viewBox="0 0 120 50" fill="#12190F">
+<path d="M8 34h104a4 4 0 004-4v-6a8 8 0 00-6-7.8l-14-3.4-9-7.6A10 10 0 0080.5 3h-33a10 10 0 00-6.5 2.4l-9 7.6-14 3.4A8 8 0 004 24v6a4 4 0 004 4z"/>
+<circle cx="30" cy="36" r="8" fill="#3C4A40"/><circle cx="30" cy="36" r="3.5" fill="#F1EEE4"/>
+<circle cx="92" cy="36" r="8" fill="#3C4A40"/><circle cx="92" cy="36" r="3.5" fill="#F1EEE4"/>
+</svg>`;
+
+const cars=[
+ {n:'2021 Honda Civic EX',y:'58,200 km',t:'Automatic',f:'Sedan',p:'$23,995',m:'$318/mo',tag:'Fixed price'},
+ {n:'2020 Toyota RAV4 LE',y:'71,400 km',t:'AWD',f:'SUV',p:'$27,450',m:'$364/mo',tag:'Fixed price'},
+ {n:'2022 Hyundai Elantra',y:'34,900 km',t:'Automatic',f:'Sedan',p:'$21,300',m:'$282/mo',tag:'Low km'},
+ {n:'2019 Ford F-150 XLT',y:'96,700 km',t:'4x4',f:'Truck',p:'$31,900',m:'$423/mo',tag:'Fixed price',g:1},
+ {n:'2021 Mazda CX-5 GS',y:'62,100 km',t:'AWD',f:'SUV',p:'$26,800',m:'$355/mo',tag:'Just in'},
+ {n:'2020 Toyota Corolla LE',y:'48,300 km',t:'Hybrid',f:'Sedan',p:'$22,650',m:'$300/mo',tag:'Hybrid'},
+ {n:'2018 Honda CR-V EX',y:'88,500 km',t:'AWD',f:'SUV',p:'$19,995',m:'$265/mo',tag:'Under $20K',g:1},
+ {n:'2022 Kia Seltos EX',y:'29,800 km',t:'AWD',f:'SUV',p:'$25,400',m:'$337/mo',tag:'Low km'},
+ {n:'2021 Nissan Rogue SV',y:'54,600 km',t:'AWD',f:'SUV',p:'$24,900',m:'$330/mo',tag:'Fixed price'}
+];
+
+document.getElementById('cars').innerHTML=cars.map((c,i)=>`
+<article class="car rv rv${(i%3)+1}">
+  <div class="car-img">
+    <span class="stamp-tag ${c.g?'ink':''}">${c.tag}</span>
+    ${CAR}
+  </div>
+  <div class="car-body">
+    <h3>${c.n}</h3>
+    <div class="spec"><span>${c.y}</span><span>${c.t}</span><span>${c.f}</span></div>
+    <div class="price-row">
+      <div class="price"><b>${c.p}</b><small>${c.m} · 84 mo</small></div>
+      <div class="view">Details <span>→</span></div>
+    </div>
+  </div>
+</article>`).join('');
+
+// nav + filters
+document.getElementById('burger').onclick=()=>document.getElementById('menu').classList.toggle('open');
+document.querySelectorAll('.chip').forEach(c=>c.onclick=()=>{
+  document.querySelectorAll('.chip').forEach(x=>x.classList.remove('on'));
+  c.classList.add('on');
+});
+
+// scroll reveal
+const io=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+},{threshold:.15});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+
+// cursor glow in hero
+const hero=document.getElementById('heroSection'), glow=document.getElementById('glowCursor');
+hero.addEventListener('mousemove',e=>{
+  const r=hero.getBoundingClientRect();
+  glow.style.left=(e.clientX-r.left)+'px';
+  glow.style.top=(e.clientY-r.top)+'px';
+});
+
+// 3D tilt on car cards
+document.addEventListener('mousemove',e=>{
+  const card=e.target.closest('.car');
+  if(!card) return;
+  const r=card.getBoundingClientRect();
+  const x=(e.clientX-r.left)/r.width-.5, y=(e.clientY-r.top)/r.height-.5;
+  card.style.transform=`perspective(700px) rotateY(${x*8}deg) rotateX(${-y*8}deg) translateY(-4px)`;
+});
+document.addEventListener('mouseover',e=>{ if(e.target.closest('.car')) return; });
+document.querySelectorAll('.car').forEach(card=>{
+  card.addEventListener('mouseleave',()=>{ card.style.transform='perspective(700px) rotateY(0) rotateX(0) translateY(0)'; });
+});
+
+// animated counters
+const counters=document.querySelectorAll('[data-count]');
+const cio=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(!e.isIntersecting) return;
+    cio.unobserve(e.target);
+    const el=e.target, target=parseFloat(el.dataset.count), dec=parseInt(el.dataset.decimal||0);
+    const prefix=el.dataset.prefix||'', suffix=el.dataset.suffix||'';
+    let start=0, dur=1300, t0=null;
+    function step(ts){
+      if(!t0) t0=ts;
+      const p=Math.min((ts-t0)/dur,1);
+      const eased=1-Math.pow(1-p,3);
+      const val=(target*eased).toFixed(dec);
+      el.textContent=prefix+val+suffix;
+      if(p<1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  });
+},{threshold:.5});
+counters.forEach(c=>cio.observe(c));
+
+// parallax skyline
+window.addEventListener('scroll',()=>{
+  const sk=document.getElementById('skylineFar');
+  const wrap=sk.closest('.skyline-wrap');
+  const r=wrap.getBoundingClientRect();
+  if(r.top<window.innerHeight && r.bottom>0){
+    sk.style.transform=`translateY(${r.top*0.06}px)`;
+  }
+},{passive:true});
+
+// header shrink shadow on scroll
+window.addEventListener('scroll',()=>{
+  document.querySelector('header').style.boxShadow = window.scrollY>10 ? '0 8px 24px -18px rgba(18,25,15,.4)' : 'none';
+},{passive:true});
+</script>
+</body>
+</html>
