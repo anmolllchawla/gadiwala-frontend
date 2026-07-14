@@ -491,7 +491,7 @@ const CAR = `<svg viewBox="0 0 120 50" fill="#12190F">
 </svg>`;
 
 const cars=[
-{n:'2021 Jeep Grand Cherokee L Summit 4x4',y:'73,032 km',t:'Auto',f:'SUV',p:'$38,990',m:'$506/mo',tag:'Fixed price'},
+{n:'2021 Jeep Grand Cherokee L Summit 4x4',y:'73,032 km',t:'Auto',f:'SUV',p:'$38,990',m:'$507/mo',tag:'Fixed price',img:'https://prod.pictures.autoscout24.net/listing-images/6d359010-140a-484d-8b71-0f78ed2468f2_34d04a9b-c498-4967-9d96-13349ae0091b.jpg/480x360.jpg'},
 {n:'2024 Dodge Durango GT Plus AWD',y:'72,512 km',t:'Auto',f:'SUV',p:'$38,999',m:'$506/mo',tag:'Fixed price'},
 {n:'2024 GMC Sierra 1500 Denali 4x4',y:'71,810 km',t:'Auto',f:'Truck',p:'$62,990',m:'$818/mo',tag:'Fixed price'},
 {n:'2024 GMC Canyon AT4X 4x4',y:'15,781 km',t:'Auto',f:'Truck',p:'$62,990',m:'$818/mo',tag:'Just in'},
@@ -595,7 +595,7 @@ document.getElementById('cars').innerHTML=cars.map((c,i)=>`
 <article class="car rv rv${(i%3)+1}" onclick="openModal(${i})">
   <div class="car-img">
     <span class="stamp-tag ${c.g?'ink':''}">${c.tag}</span>
-    ${CAR}
+    ${c.img?`<img src="${c.img}" alt="${c.n}" style="width:100%;height:100%;object-fit:cover;position:absolute;top:0;left:0">`:CAR}
   </div>
   <div class="car-body">
     <h3>${c.n}</h3>
