@@ -222,6 +222,19 @@ footer{background:var(--ink);color:#9FAA9F;padding:54px 0 30px;font-size:.85rem}
   section{padding:58px 0}
 }
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+/* modal overlay */
+.modal-overlay{position:fixed;inset:0;z-index:300;background:rgba(18,25,15,.65);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s ease}
+.modal-overlay.open{opacity:1;pointer-events:auto}
+.modal{background:var(--card);border-radius:10px;padding:32px;max-width:620px;width:92vw;max-height:85vh;overflow-y:auto;box-shadow:0 30px 70px -24px rgba(0,0,0,.5);position:relative}
+.modal-close{position:absolute;top:12px;right:12px;border:none;background:none;font-size:1.3rem;cursor:pointer;color:var(--muted)}
+.modal-close:hover{color:var(--ink)}
+.modal .modal-gallery{display:flex;gap:8px;overflow-x:auto;margin-bottom:16px}
+.modal h3{font-family:'Fraunces',serif;font-weight:650;font-size:1.2rem}
+.modal .spec{font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--muted);display:flex;gap:13px;flex-wrap:wrap}
+.modal .price-row{border-top:1px solid var(--rule);padding-top:14px;margin-top:14px;display:flex;justify-content:space-between;align-items:flex-end}
+.modal .price b{font-family:'Fraunces',serif;font-size:1.4rem;font-weight:650}
+.modal .price small{font-family:'IBM Plex Mono',monospace;font-size:.66rem;color:var(--muted);display:block;margin-top:3px}
 </style>
 </head>
 <body>
@@ -579,7 +592,7 @@ const cars=[
 ];
 
 document.getElementById('cars').innerHTML=cars.map((c,i)=>`
-<article class="car rv rv${(i%3)+1}">
+<article class="car rv rv${(i%3)+1}" onclick="openModal(${i})">
   <div class="car-img">
     <span class="stamp-tag ${c.g?'ink':''}">${c.tag}</span>
     ${CAR}
@@ -593,6 +606,51 @@ document.getElementById('cars').innerHTML=cars.map((c,i)=>`
     </div>
   </div>
 </article>`).join('');
+
+// favorite / save
+let saved=JSON.parse(localStorage.getItem('gw_favs')||'[]');
+function toggleFav(id){
+  const i=saved.indexOf(id);
+  i>-1?saved.splice(i,1):saved.push(id);
+  localStorage.setItem('gw_favs',JSON.stringify(saved));
+}
+
+// ── modal ──
+const modalOverlay=document.createElement('div');
+modalOverlay.className='modal-overlay';
+modalOverlay.onclick=function(e){if(e.target===this)closeModal()};
+document.body.appendChild(modalOverlay);
+
+const modal=document.createElement('div');
+modal.className='modal';
+modal.innerHTML=`<button class="modal-close" onclick="closeModal()">✕</button>
+  <div class="modal-gallery" id="m-gallery"></div>
+  <h3 id="m-title"></h3>
+  <div class="spec" id="m-specs" style="margin:12px 0"></div>
+  <div class="price-row" id="m-price-row"></div>
+  <p id="m-desc" style="color:var(--muted);font-size:.85rem;line-height:1.55;margin:14px 0"></p>
+  <a href="tel:+16045550142" class="btn btn-p" style="display:inline-block;text-decoration:none">📞 Call Rishabh</a>
+  <a href="mailto:rishabh@gadiwala.ca" class="btn btn-s" style="display:inline-block;text-decoration:none;margin-left:8px">✉️ Email</a>`;
+modalOverlay.appendChild(modal);
+
+function openModal(i){
+  const c=cars[i];
+  if(!c)return;
+  document.getElementById('m-title').textContent=c.n;
+  const kmText=c.y==='New'?'New vehicle':c.y;
+  document.getElementById('m-specs').innerHTML=`<span>${kmText}</span><span>${c.t}</span><span>${c.f}</span>`;
+  document.getElementById('m-price-row').innerHTML=`<div class="price"><b>${c.p}</b><small>${c.m} est · 84 mo</small></div>`;
+  document.getElementById('m-desc').textContent=`This ${c.n} is available now at Gadiwala.ca — 4820 Kingsway, Burnaby. Inspection and Carfax are already done. Call Rishabh to book a test drive.`;
+  document.getElementById('m-gallery').innerHTML=`<div style="min-width:280px;height:180px;background:var(--gray-50);border-radius:6px;display:grid;place-items:center;color:var(--gray-400);font-size:.85rem">📷 Vehicle photos — call for details</div>`;
+  modalOverlay.classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+function closeModal(){
+  modalOverlay.classList.remove('open');
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
 
 // nav + filters
 document.getElementById('burger').onclick=()=>document.getElementById('menu').classList.toggle('open');
